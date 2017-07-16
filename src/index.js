@@ -77,15 +77,14 @@ function executeCommands() {
 }
 
 program
-  .version('0.2.0')
   .option('-l, --list', 'List the sessions')
   .option('-r, --rec <session>', 'Start recording commands')
   .option('-p, --play <session>', 'Ejecute the session saved')
   .parse(process.argv)
 
 const config = {
-  action: program.recording ? RECORDING : null || program.play ? PLAY : null || program.list ? LIST : null,
-  name: program.recording || program.play,
+  action: program.rec ? RECORDING : null || program.play ? PLAY : null || program.list ? LIST : null,
+  name: program.rec || program.play,
   dir: './sessions',
   extension: 'cmmd',
   prompt: [{type: 'input', name: 'command', message: '> '}],
