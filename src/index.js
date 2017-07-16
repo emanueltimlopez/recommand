@@ -85,7 +85,7 @@ program
 const config = {
   action: program.rec ? RECORDING : null || program.play ? PLAY : null || program.list ? LIST : null,
   name: program.rec || program.play,
-  dir: './sessions',
+  dir: './.sessions',
   extension: 'cmmd',
   prompt: [{type: 'input', name: 'command', message: '> '}],
   get getSessionDir () { return `${this.dir}/${this.name}.${this.extension}` },
