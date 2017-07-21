@@ -1,7 +1,7 @@
 # RECommand
 Automate commands, create session and save lifes (?.
 
-You can save a lot of commands and run in only one.
+You can save a lot of commands and run in only one (asynchronous).
 
 ### Get sessions saved
 ```

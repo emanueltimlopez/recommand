@@ -1,6 +1,6 @@
 {
   "name": "recommand",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Automate commands, create session and save lifes ",
   "main": "index.js",
   "scripts": {
