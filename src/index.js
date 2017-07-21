@@ -31,11 +31,20 @@ function routerCommands() {
   }
 }
 
+function getSessions() {
+  return fs.readdirSync(config.dir)
+    .filter(file => file.match(new RegExp(`.${config.extension}`)))
+    .map(file => file.replace(`.${config.extension}`, ''))
+}
+
 function listSessions() {
-  fs.readdirSync(config.dir).forEach(file => {
-    if (file.match(new RegExp(`.${config.extension}`)))
-      console.log('- ', file.replace(`.${config.extension}`, ''));
-  })
+  config.promptSessions[0].choices = getSessions()
+  prompt(config.promptSessions)
+    .then(value => { 
+      config.name = value.list
+      executeCommands()
+    })
+    .catch(err => console.error(err))
 }
 
 function continueOrExit() {
@@ -46,7 +55,11 @@ function continueOrExit() {
         continueOrExit()
         return
       }
-      process.stdin.pause()
+      prompt(config.promptRun)
+        .then(value => { 
+          if (value.run) executeCommands() 
+        })
+        .catch(err => console.error(err))
     })
     .catch(err => console.error(err))
 }
@@ -77,18 +90,19 @@ function executeCommands() {
 }
 
 program
-  .version('0.2.0')
   .option('-l, --list', 'List the sessions')
   .option('-r, --rec <session>', 'Start recording commands')
   .option('-p, --play <session>', 'Ejecute the session saved')
   .parse(process.argv)
 
 const config = {
-  action: program.recording ? RECORDING : null || program.play ? PLAY : null || program.list ? LIST : null,
-  name: program.recording || program.play,
-  dir: './sessions',
+  action: program.rec ? RECORDING : null || program.play ? PLAY : null || program.list ? LIST : null,
+  name: program.rec || program.play,
+  dir: './.sessions',
   extension: 'cmmd',
   prompt: [{type: 'input', name: 'command', message: '> '}],
+  promptRun: [{type: 'confirm', name: 'run', message: 'Do you want to run the session?'}],
+  promptSessions: [{type: 'list', name: 'list', message: 'Select the session you want to run'}],
   get getSessionDir () { return `${this.dir}/${this.name}.${this.extension}` },
 }
 
