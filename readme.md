@@ -7,11 +7,13 @@ You can save a lot of commands and run in only one.
 ```
     recommand --list
 ```
+![List in action](/../screenshots/list.png?raw=true "List in action")
 
 ### Start session for save commands
 ```
     recommand --rec <name for new session>
 ```
+![Recording in action](/../screenshots/rec.png?raw=true "Recording in action")
 
 ### Run session
 ```
